@@ -3,29 +3,32 @@ require "yaml"
 require "./server"
 
 module Beanstalk
-  # Constant for the default socket connect time out setting. This value can be
-  # overridden using the BEANSTALK_CR_CONNECT_TIMEOUT environment setting.
-  DEFAULT_CONNECT_TIMEOUT = "10"
-
-  # A constant for the default buffer size to be used when reading data from the
-  # Beanstalk server (in bytes).
-  DEFAULT_BUFFER_SIZE = "1024"
-
-  # Constant for the default read wait time (in milliseconds).
-  DEFAULT_READ_WAIT_TIME = "10000"
-
-  # Constant for the line ending used by Beanstalk commands.
-  LINE_ENDING = [13_u8, 10_u8]
-
-  # Constant for the stats job buffer size.
-  STATS_BUFFER_SIZE = 4096
-
   # Instance data.
   @socket : Socket? = nil
 
   # This class encapsulates a connection to a Beanstalk instance. Note that
   # this class is not thread safe and instances of it should not be shared.
   class Connection
+    # A constant for the default buffer size to be used when reading data from the
+    # Beanstalk server (in bytes).
+    DEFAULT_BUFFER_SIZE = "1024"
+
+    # Constant for the default socket connect time out setting. This value can be
+    # overridden using the BEANSTALK_CR_CONNECT_TIMEOUT environment setting.
+    DEFAULT_CONNECT_TIMEOUT = "10"
+
+    # A constant for the default host name.
+    DEFAULT_HOST = "localhost"
+
+    # Constant for the default read wait time (in milliseconds).
+    DEFAULT_READ_WAIT_TIME = "10000"
+
+    # Constant for the line ending used by Beanstalk commands.
+    LINE_ENDING = [13_u8, 10_u8]
+
+    # Constant for the stats job buffer size.
+    STATS_BUFFER_SIZE = 4096
+
     # Fetches details of the server associated with a Connection instance.
     getter :server
 
@@ -210,7 +213,7 @@ module Beanstalk
 
     # Internally used method to generate the socket connect timeout setting
     # based on an environment variable setting or a default value.
-    def socket_timeout
+    private def socket_timeout
       ENV.fetch("BEANSTALK_CONNECT_TIMEOUT", DEFAULT_CONNECT_TIMEOUT).to_i
     end
 
@@ -230,7 +233,7 @@ module Beanstalk
     # This method creates a Connection object connecting to Beanstalk on
     # localhost and using the default port.
     def self.open()
-      self.open(Server.new("localhost"))
+      self.open(Server.new(DEFAULT_HOST))
     end
 
     # This method creates a Connection object and attempts to connect it to
@@ -240,11 +243,14 @@ module Beanstalk
       instance = self.new(server)
       instance.connect()
       instance
+    rescue error
+      Log.error {"Error connecting to Beanstalk server. Cause: #{error}\n#{error.backtrace.join("\n")}"}
+      raise Beanstalk::Exception.new("Error connecting to Beanstalk server. Cause: #{error}")
     end
 
     # This method creates a Connection object and attempts to connect it to
     # a Beanstalk server instance.
-    def self.open(host, port=Server::DEFAULT_PORT)
+    def self.open(host : String, port=Server::DEFAULT_PORT)
       self.open(Server.new(host, port))
     end
   end

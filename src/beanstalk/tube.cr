@@ -35,12 +35,18 @@ module Beanstalk
 
     # Constructor. Preferrably you should simple obtain your Tube instances
     # from a Connection instance rather than direct instantiating them.
+    # Creates a Tube object set to use and watch the queue name passed in.
+    # If the queue name differs from the default then the Tube created will
+    # still be watching the default queue too.
     def initialize(connection : Connection, name : String = DEFAULT_QUEUE_NAME)
       validate_tube_name!(name)
       @connection = connection
       @using      = DEFAULT_QUEUE_NAME
       @watching   = [DEFAULT_QUEUE_NAME]
-      use(name) if name != DEFAULT_QUEUE_NAME
+      if name != DEFAULT_QUEUE_NAME
+        use(name)
+        watch(name)
+      end
     end
 
     # Buries the job by its id. Buried jobs are not part of the ready jobs
