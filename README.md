@@ -184,6 +184,35 @@ not have expired. Examples of what you can do include...
 This covers the primary usage for the library. There are other capabilities provided
 by the library but you should consult the API documentation for further details.
 
+### Environment Settings
+
+The library takes note of a number of enviroment settings that can alter how it operates
+when these are set. These are detailed below...
+
+**BEANSTALK_CONNECT_TIMEOUT** - Is used to set the time out on obtaining an initial
+connection to a Beanstalk server. Defaults to 10 seconds and should be an integer value.
+
+**BEANSTALK_DEFAULT_JOB_DELAY** - Is used to set the default delay assigned to jobs added
+to Beanstalk without an explicit delay. Default to zero and should be an integer value.
+
+**BEANSTALK_DEFAULT_JOB_PRIORITY** - Is used to set the default priority assigned to jobs
+added to Beanstalk without an explicit priority. Defaults to 1000 and should be an integer
+value.
+
+**BEANSTALK_DEFAULT_JOB_TTR** - Is used to set the default time to run assigned to jobs
+added to Beanstsalk without an explicit TTR. Defaults to 3600 (1 hour) and should be an
+integer value (in seconds).
+
+**BEANSTALK_READ_BUFFER_SIZE** - Is used to set the buffer sized for reading Beanstalk
+messages from the server. Might be useful to bump in size if you're using very large
+jobs but probably not. Should be an integer value.
+
+## Development
+
+Code is freely available, so familiarize yourself with that. Note that the unit tests
+require an actual instance of Beanstalk to run and assume that they will be using an
+instance on localhost at the default port number.
+
 ## Contributing
 
 1. Fork it (<https://github.com/your-github-user/beanstalk-cr/fork>)
