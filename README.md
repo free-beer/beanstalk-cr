@@ -15,7 +15,7 @@ A Crystal library for interfacing with the Beanstalk queue.
    ```yaml
    dependencies:
      beanstalk-cr:
-       github: https://github.com/free-beer/beanstalk-cr.git
+       github: free-beer/beanstalk-cr.git
    ```
 
 2. Run `shards install`
