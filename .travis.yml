@@ -5,7 +5,7 @@ before_install:
 
 deploy:
   provider: pages
-  skip_cleanup: false
+  skip_cleanup: true
   github_token: $GITHUB_TOKEN
   project_name: beanstalk-cr
   on:
