@@ -334,8 +334,11 @@ describe Beanstalk::Tube do
       jobs = create_populated_queue
       tube = get_test_tube
       job = tube.reserve(Time::Span.new(seconds: 1))
-      tube.touch(job).should be_true
-      tube.release(job) if job.is_a?(Beanstalk::Job)
+      job.should_not be_nil
+      if job.is_a?(Beanstalk::Job)
+        tube.touch(job).should be_true if job.is_a?(Beanstalk::Job)
+        tube.release(job) if job.is_a?(Beanstalk::Job)
+      end
       tube.empty!
     end
   end

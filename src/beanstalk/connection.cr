@@ -23,22 +23,19 @@ module Beanstalk
   # Instance data.
   @socket : Socket? = nil
 
-  # Accessors & mutators.
-  getter :server
-
   # This class encapsulates a connection to a Beanstalk instance. Note that
   # this class is not thread safe and instances of it should not be shared.
   class Connection
-    # Accessors & mutators.
+    # Fetches details of the server associated with a Connection instance.
     getter :server
+
+    # Fetches the socket for a Connection object. Should generally not be accessed directly.
     getter :socket
 
-    # Constructor.
+    # Constructor. Private method, use one of the open() methods instead.
     private def initialize(server : Server)
       @server              = server
       @socket              = Socket.new(Socket::Family::INET, Socket::Type::STREAM)
-      Log.debug {"Setting socket read time out to #{Connection.read_wait_time} seconds."}
-      # @socket.read_timeout = Connection.read_wait_time
     end
 
     # This method attempts to establish a connection with the Beanstalk
@@ -59,7 +56,8 @@ module Beanstalk
       !open?
     end
 
-    # Fetches the default tube for a Connection.
+    # Fetches the default tube for a Connection (i.e. a tube using and watching
+    # the default queue).
     def default_tube()
       Tube.new(self)
     end
@@ -210,18 +208,21 @@ module Beanstalk
       receive_stats()
     end
 
-    # Internal method used to generate the socket connect timeout setting.
+    # Internally used method to generate the socket connect timeout setting
+    # based on an environment variable setting or a default value.
     def socket_timeout
       ENV.fetch("BEANSTALK_CONNECT_TIMEOUT", DEFAULT_CONNECT_TIMEOUT).to_i
     end
 
-    # Retrieves a tube with a given name.
+    # Retrieves a tube with a given name (i.e. a tube that is set to use and
+    # watch the named queue).
     def [](name : String)
       Tube.new(self, name)
     end
 
     # Returns the size of the read buffer to be used when fetching data from
-    # the server.
+    # the server. This value is determined from an environment variable setting
+    # with a fall back to a default.
     def self.buffer_size
       ENV.fetch("BEANSTALK_READ_BUFFER_SIZE", DEFAULT_BUFFER_SIZE).to_i
     end
@@ -245,10 +246,6 @@ module Beanstalk
     # a Beanstalk server instance.
     def self.open(host, port=Server::DEFAULT_PORT)
       self.open(Server.new(host, port))
-    end
-
-    def self.read_wait_time
-      Time::Span.new(nanoseconds: ENV.fetch("BEANSTALK_READ_WAIT_TIME", DEFAULT_READ_WAIT_TIME).to_u64 * 1000000)
     end
   end
 end

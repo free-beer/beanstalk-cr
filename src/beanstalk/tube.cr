@@ -20,16 +20,21 @@ module Beanstalk
       Ready
     end
 
-    # Accessors & mutators.
+    # Retrieves the connection associated with the Tube.
     getter :connection
+
+    # Retrieves the name of the queue the Tube is using.
     getter :using
+
+    # Retrieves an array of the names of the queues the Tube is watching.
     getter :watching
 
     # Instance data.
     @watching : Array(String)
     @using : String
 
-    # Constructor.
+    # Constructor. Preferrably you should simple obtain your Tube instances
+    # from a Connection instance rather than direct instantiating them.
     def initialize(connection : Connection, name : String = DEFAULT_QUEUE_NAME)
       validate_tube_name!(name)
       @connection = connection
@@ -38,8 +43,9 @@ module Beanstalk
       use(name) if name != DEFAULT_QUEUE_NAME
     end
 
-    # Buries the specified job.
-    def bury(job_id, priority : UInt32 = JobSettings::DEFAULT_PRIORITY)
+    # Buries the job by its id. Buried jobs are not part of the ready jobs
+    # list and therefore cannot be reserved. To unbury a job kick it.
+    def bury(job_id, priority : UInt32 = Job::Settings::DEFAULT_PRIORITY)
       Log.debug {"Requesting that job id #{job_id} be buried with a priority of #{priority}."}
       connection.send(nil, "bury", job_id, priority)
       response = String.new(connection.receive())
@@ -50,10 +56,11 @@ module Beanstalk
       true
     end
 
-    # Buries the specified job.
-    def bury(job : Job)
+    # Buries the specified job. Buried jobs are not part of the ready jobs
+    # list and therefore cannot be reserved. To unbury a job kick it.
+    def bury(job : Job, priority : UInt32 = Job::Settings::DEFAULT_PRIORITY)
       raise Beanstalk::Exception.new("Job has no id and therefore cannot be buried.") if job.id.nil?
-      bury(job.id)
+      bury(job.id, priority)
     end
 
     # This method instructs the server to kick buried jobs to the ready queue.
@@ -105,12 +112,12 @@ module Beanstalk
     end
 
     # Deletes a Job from Beanstalk. Note the Job passed in *must* have an id
-    # or an exception will be raised. Returns true upon completion.
+    # or an exception will be raised. Returns true upon successful completion.
     def delete(job : Job)
       delete(job.id)
     end
 
-    # Attempts to delete the Job passed in. If the Job has no idea then the
+    # Attempts to delete the Job passed in. If the Job has no id then the
     # method simply returns false, otherwise it makes a call to delete()
     # using the specified job.
     def delete?(job : Job)
@@ -163,8 +170,8 @@ module Beanstalk
 
     # This method puts a Job into the queue currently being used by the
     # Tube.
-    def put(job : Job, settings : JobSettings? = nil)
-      settings = JobSettings.new if settings.nil?
+    def put(job : Job, settings : Job::Settings? = nil)
+      settings = Job::Settings.new if settings.nil?
       bytes    = job.bytes
       Log.debug {"Adding a job to a tube using the '#{using}' queue."}
       connection.send(bytes, "put", settings.priority, settings.delay, settings.time_to_run, bytes.size)
@@ -192,14 +199,22 @@ module Beanstalk
       job.id = job_id
     end
 
-    # This method releases a Job that had previously been reserved. Note that,
+    # This method releases a Job that had previously been reserved, returning it
+    # to the ready list and making it available to be reserved again. Note that,
     # if job settings are specified, only the priority and delay are set when
     # the job is released.
-    def release(job : Job, settings : JobSettings? = nil)
-      raise Beanstalk::Exception.new("Job has no id and cannot be released.") if job.id.nil?
-      Log.debug {"Requesting release of job id #{job.id}."}
-      settings = JobSettings.new if settings.nil?
-      connection.send(nil, "release", job.id, settings.priority, settings.delay)
+    def release(job_id : Int|String, settings : Job::Settings? = nil)
+      if job_id.is_a?(String)
+        begin
+          job_id = job_id.to_i64
+        rescue
+          raise Beanstalk::Exception.new("Invalid job id '#{job_id}' specified in call to release.")
+        end
+      end
+
+      settings = Job::Settings.new if settings.nil?
+      Log.debug {"Requesting release of job id #{job_id} (Priority: #{settings.priority}, Delay: #{settings.delay})."}
+      connection.send(nil, "release", job_id, settings.priority, settings.delay)
 
       response = String.new(connection.receive()).chomp
       if response != "RELEASED"
@@ -208,12 +223,25 @@ module Beanstalk
           when "BURIED"
             message = "Server is out of memory to grow priority queue, buried response returned."
           else
-            message = "Unable to release job id #{job.id} as the job was not found."
+            message = "Unable to release job id #{job_id} as the job was not found."
         end
-        Log.error {"Release job id #{job.id} filed. #{message}. Response:\n#{response}"}
+        Log.error {"Release job id #{job_id} filed. #{message}. Response:\n#{response}"}
         raise Beanstalk::Exception.new(message)
       end
       true
+    end
+
+    # This method releases a Job that had previously been reserved, returning it
+    # to the ready list and making it available to be reserved again. Note that,
+    # if job settings are specified, only the priority and delay are set when
+    # the job is released.
+    def release(job : Job, settings : Job::Settings? = nil)
+      job_id = job.id
+      if job_id.is_a?(Nil)
+        raise Beanstalk::Exception.new("Job has no id and cannot be released.")
+      else
+        release(job_id, settings)
+      end
     end
 
     # Reserves a job from a Tube based on it's id. This method will raises
@@ -247,8 +275,7 @@ module Beanstalk
 
     # Attempts to reserve a Job from a Tube. Takes an optional time_out parameter
     # the indicates the mimimum number of seconds to wait for a Job to become
-    # available before giving up and returning nil. The time_out parameter
-    # defaults to -1 to indicate that the reserve should wait indefinitely.
+    # available before giving up and returning nil.
     def reserve(time_out : Time::Span) : Job|Nil
       Log.debug {"Reserving job from a tube with a time out of #{time_out.total_seconds.to_i} and a watch list of #{watching.join(", ")}."}
       connection.send(nil, "reserve-with-timeout #{time_out.total_seconds.to_i}")
@@ -263,7 +290,7 @@ module Beanstalk
 
     # This method fetches stats for the queue being used by a tube.
     def stats
-      Log.debug {"Attempting to fetch stats for a tube."}
+      Log.debug {"Attempting to fetch stats for the '#{using}' queue."}
       connection.send(nil, "stats-tube", using)
       connection.receive_stats()
     end
@@ -286,8 +313,16 @@ module Beanstalk
     end
 
     # Touches the specified job, extending it's current time to run.
-    def touch(job_id)
-      Log.debug {"Attempting to touch job id #{job_id}."}
+    def touch(job_id : Int|String)
+      if job_id.is_a?(String)
+        begin
+          job_id = job_id.to_i64
+        rescue
+          raise Beanstalk::Exception.new("Invalid job id '#{job_id}' specified in call to touch job.")
+        end
+      end
+
+      Log.debug {"Attempting to touch job id #{job_id} in the '#{using}' queue."}
       connection.send(nil, "touch", job_id)
       response = String.new(connection.receive())
       if !response.starts_with?("TOUCHED")
@@ -299,8 +334,12 @@ module Beanstalk
 
     # Touches the specified job, extending it's current time to run.
     def touch(job : Job)
-      raise Beanstalk::Exception.new("Job has no id and therefore cannot be touched.") if job.id.nil?
-      touch(job.id)
+      job_id = job.id
+      if job_id.is_a?(Nil)
+        raise Beanstalk::Exception.new("Job has no id and therefore cannot be touched.")
+      else
+        touch(job_id)
+      end
     end
 
     # Instructs a Tube to use a given queue name, supplanting the previously

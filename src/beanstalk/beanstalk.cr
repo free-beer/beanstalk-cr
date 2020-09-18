@@ -1,6 +1,5 @@
 require "./exceptions"
 require "./connection"
 require "./server"
-require "./job_settings"
 require "./job"
 require "./tube"

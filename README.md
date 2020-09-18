@@ -126,7 +126,7 @@ queue are shown below...
   tube.put(job1)
 
   # Adding a job with explicit settings for priority, delay and TTR.
-  settings = Beanstalk::JobSettings.new(0, 120, 600)
+  settings = Beanstalk::Job::Settings.new(0, 120, 600)
   job2     = Beanstalk::Job.new("Some different content for my second job.")
   tube.put(job2, settings)
 ```
@@ -176,7 +176,7 @@ not have expired. Examples of what you can do include...
   tube.release(job)
 
   # Release the job giving it different priority and delay settings.
-  settings = Beanstalk::JobSettings.new(250, 600)
+  settings = Beanstalk::Job::Settings.new(250, 600)
   tube.release(job, settings)
 
   # Touch the job, resetting the TTR for your reservation.

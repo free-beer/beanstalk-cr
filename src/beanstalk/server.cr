@@ -7,8 +7,10 @@ module Beanstalk
     # Instance data.
     @host : String
 
-    # Accessors & mutators.
+    # Fetches the host name/IP address for the server.
     getter :host
+
+    # Fetches the port number for the server.
     getter :port
 
     # Constructor.

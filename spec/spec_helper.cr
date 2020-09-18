@@ -8,7 +8,7 @@ def create_populated_queue(entries : UInt32 = 1, delay : UInt32 = 0, name : Stri
   (0...entries).each do|i| 
     jobs << Beanstalk::Job.new("Some test data.")
     if delay > 0
-      tube.put(jobs.last, Beanstalk::JobSettings.new(Beanstalk::JobSettings::DEFAULT_PRIORITY, delay))
+      tube.put(jobs.last, Beanstalk::Job::Settings.new(Beanstalk::Job::Settings::DEFAULT_PRIORITY, delay))
     else
       tube.put(jobs.last)
     end
