@@ -6,4 +6,10 @@ authors:
 
 crystal: 0.35.1
 
-license: MIT
+description: A library for interfacing with the Beanstalk queue.
+
+homepage: https://github.com/free-beer/beanstalk-cr
+
+license: Apache-2.0
+
+repository: https://github.com/free-beer/beanstalk-cr.git
