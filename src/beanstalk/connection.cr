@@ -11,7 +11,7 @@ module Beanstalk
   class Connection
     # A constant for the default buffer size to be used when reading data from the
     # Beanstalk server (in bytes).
-    DEFAULT_BUFFER_SIZE = "1024"
+    DEFAULT_BUFFER_SIZE = "2048"
 
     # Constant for the default socket connect time out setting. This value can be
     # overridden using the BEANSTALK_CR_CONNECT_TIMEOUT environment setting.
@@ -110,7 +110,7 @@ module Beanstalk
       end
 
       # Check if we max'ed out the read buffer.
-      Log.warn {"Read in #{read_size} bytes from the server."}
+      Log.debug {"Read in #{read_size} bytes from the server."}
       if read_size == slice.size
         # Assume we received a successful reserve and locate the line break offset.
         offset = 0
@@ -122,28 +122,21 @@ module Beanstalk
         _, _, job_size = String.new(slice[0, offset]).split(" ")
         job_size  = job_size.to_i32
         available = slice.size - (offset + 2)
-        Log.warn {"Job Size: #{job_size} bytes, Currently Available: #{available} bytes"}
         if available < job_size + 2
           # More to be read, so go get it.
           remaining = (job_size - available) + 2
-          Log.warn {"There are #{remaining} bytes of job to be read."}
-          extra     = Slice.new(remaining, 0_u8)
-          begin
-            read_size = @socket.read(extra)
-          rescue error : IO::TimeoutError
-            Log.debug {"Socket read timed out, assuming no more to be read."}
-            read_size = 0
-          end
-          Log.warn {"Read another #{read_size} bytes from the server."}
-
-          if read_size != remaining
-            Log.error {"Error reading data from Beanstalk server."}
-            raise Beanstalk::Exception.new("Error reading data from Beanstalk server.")
-          end
-
-          # Copy all the data into the output array.
           data.concat(slice.to_a[0, slice.size])
-          data.concat(extra.to_a[0, extra.size])
+          while remaining > 0
+            begin
+              read_size = @socket.read(slice)
+            rescue error : IO::TimeoutError
+              Log.debug {"Socket read timed out, assuming no more to be read."}
+              read_size = 0
+            end
+            Log.debug {"Read in a further #{read_size} bytes from the server."}
+            data.concat(slice.to_a[0, read_size])
+            remaining -= read_size
+          end
         else
           # Full job content retrieved, copy data into output array.
           data.concat(slice.to_a[0, read_size])
