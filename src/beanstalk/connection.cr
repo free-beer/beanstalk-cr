@@ -110,6 +110,7 @@ module Beanstalk
       end
 
       # Check if we max'ed out the read buffer.
+      Log.debug {"Read in #{read_size} bytes from the server."}
       if read_size == slice.size
         # Assume we received a successful reserve and locate the line break offset.
         offset = 0
@@ -121,9 +122,11 @@ module Beanstalk
         _, _, job_size = String.new(slice[0, offset]).split(" ")
         job_size  = job_size.to_i32
         available = slice.size - (offset + 2)
+        Log.debug {"Job Size: #{job_size} bytes, Currently Available: #{available} bytes"}
         if available < job_size + 2
           # More to be read, so go get it.
           remaining = (job_size - available) + 2
+          Log.debug {"There are #{remaining} bytes of job to be read."}
           extra     = Slice.new(remaining, 0_u8)
           begin
             read_size = @socket.read(extra)
@@ -131,6 +134,7 @@ module Beanstalk
             Log.debug {"Socket read timed out, assuming no more to be read."}
             read_size = 0
           end
+          Log.debug {"Read another #{read_size} bytes from the server."}
 
           if read_size != remaining
             Log.error {"Error reading data from Beanstalk server."}
