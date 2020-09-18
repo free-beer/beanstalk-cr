@@ -2,6 +2,13 @@ require "spec"
 require "yaml"
 require "../src/beanstalk-cr"
 
+def create_large_job
+  tube = Beanstalk::Connection.open.default_tube
+  job  = Beanstalk::Job.new("A" * Beanstalk::Connection.buffer_size * 5)
+  tube.put(job)
+  job
+end
+
 def create_populated_queue(entries : UInt32 = 1, delay : UInt32 = 0, name : String = Beanstalk::Tube::DEFAULT_QUEUE_NAME)
   jobs = Array(Beanstalk::Job).new
   tube = Beanstalk::Connection.open()[name]

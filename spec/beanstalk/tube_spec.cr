@@ -241,6 +241,19 @@ describe Beanstalk::Tube do
       tube.release(job) if job.is_a?(Beanstalk::Job)
       tube.empty!
     end
+
+    context "for jobs larger than the read buffer size", tags: "justthis" do
+      it "successfully returns the entire job" do
+        tube = get_test_tube
+        tube.empty!
+        job    = create_large_job
+        STDERR.puts "Job has #{job.size} bytes (#{job.bytes.size})."
+        output = tube.reserve
+        output.size.should eq job.size
+        output.bytes.should eq job.bytes
+        tube.empty!
+      end
+    end
   end
 
   #-----------------------------------------------------------------------------
