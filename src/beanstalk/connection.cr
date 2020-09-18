@@ -212,7 +212,7 @@ module Beanstalk
 
     # Internal method used to generate the socket connect timeout setting.
     def socket_timeout
-      ENV.fetch("BEANSTALK_CR_CONNECT_TIMEOUT", DEFAULT_CONNECT_TIMEOUT).to_i
+      ENV.fetch("BEANSTALK_CONNECT_TIMEOUT", DEFAULT_CONNECT_TIMEOUT).to_i
     end
 
     # Retrieves a tube with a given name.
