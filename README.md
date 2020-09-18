@@ -6,6 +6,8 @@ A Crystal library for interfacing with the Beanstalk queue.
 
 [![Build Status](https://travis-ci.org/free-beer/beanstalk-cr.svg?branch=master)](https://travis-ci.org/free-beer/beanstalk-cr)
 
+[![Docs](https://img.shields.io/badge/docs-available-brightgreen.svg)](https://free-beer.github.io/beanstalk-cr/)
+
 ## Installation
 
 1. Add the dependency to your `shard.yml`:
