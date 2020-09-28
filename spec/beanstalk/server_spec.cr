@@ -18,4 +18,22 @@ describe Beanstalk::Server do
       end
     end
   end
+
+  describe "#self.for()" do
+    it "returns a Server instance" do
+      Beanstalk::Server.for("host.com:12345").should be_a Beanstalk::Server
+    end
+
+    it "sets the host and port correctly" do
+      server = Beanstalk::Server.for("host.com:12345")
+      server.host.should eq "host.com"
+      server.port.should eq 12345
+    end
+
+    it "can default the port setting" do
+      server = Beanstalk::Server.for("host.com")
+      server.host.should eq "host.com"
+      server.port.should eq Beanstalk::Server::DEFAULT_PORT
+    end
+  end
 end

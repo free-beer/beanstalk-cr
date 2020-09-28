@@ -23,5 +23,14 @@ module Beanstalk
     def to_s
       "#{host}:#{port}"
     end
+
+    # Class method that converts a String in the form "host:port" into a Server
+    # instance. The port part of the string is optional.
+    def self.for(details : String)
+      parts = details.split(":").map {|e| e.strip}
+      host  = parts[0]
+      port  = (parts.size > 1 ? parts[1].to_i : DEFAULT_PORT)
+      Server.new(host, port)
+    end
   end
 end

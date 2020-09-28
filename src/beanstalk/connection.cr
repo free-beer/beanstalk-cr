@@ -196,7 +196,7 @@ module Beanstalk
         message.concat(LINE_ENDING)
       end
 
-      Log.debug {"Server message contains #{message.size} bytes of data. Contents...\n#{message.to_s}"}
+      Log.debug {"Message to server contains #{message.size} bytes of data. Contents...\n#{message.to_s}"}
       @socket.write(Slice.new(message.to_unsafe, message.size, read_only: true))
       @socket.flush
     end
@@ -235,7 +235,7 @@ module Beanstalk
 
     # This method creates a Connection object and attempts to connect it to
     # a Beanstalk server instance.
-    def self.open(server : Server)
+    def self.open(server : Server) : Connection
       Log.debug {"Establishing a connection to Beanstalk at #{server.host}:#{server.port}."}
       instance = self.new(server)
       instance.connect()
