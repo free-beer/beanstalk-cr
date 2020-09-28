@@ -1,8 +1,8 @@
 name: beanstalk-cr
-version: v0.2.1
+version: v0.2.2
 
 authors:
-  - your-name-here <your-email-here>
+  - Peter Wood <pw0470@gmail.com>
 
 crystal: 0.35.1
 
