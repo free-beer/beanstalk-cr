@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.35.1">
+<meta name="crystal_docs.project_version" content="HEAD-dev">
+<meta name="crystal_docs.project_name" content="beanstalk-cr">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="beanstalk-cr">
+  <title>Beanstalk::Tube - beanstalk-cr HEAD-dev</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          beanstalk-cr
+        </a>
+      </h1>
+
+      <span class="project-version">
+        HEAD-dev
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="beanstalk-cr/Beanstalk" data-name="beanstalk">
+      <a href="../Beanstalk.html">Beanstalk</a>
+      
+        <ul>
+  
+  <li class=" " data-id="beanstalk-cr/Beanstalk/Connection" data-name="beanstalk::connection">
+      <a href="../Beanstalk/Connection.html">Connection</a>
+      
+    </li>
+  
+  <li class=" " data-id="beanstalk-cr/Beanstalk/Exception" data-name="beanstalk::exception">
+      <a href="../Beanstalk/Exception.html">Exception</a>
+      
+    </li>
+  
+  <li class="parent " data-id="beanstalk-cr/Beanstalk/Job" data-name="beanstalk::job">
+      <a href="../Beanstalk/Job.html">Job</a>
+      
+        <ul>
+  
+  <li class=" " data-id="beanstalk-cr/Beanstalk/Job/Settings" data-name="beanstalk::job::settings">
+      <a href="../Beanstalk/Job/Settings.html">Settings</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="beanstalk-cr/Beanstalk/Server" data-name="beanstalk::server">
+      <a href="../Beanstalk/Server.html">Server</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="beanstalk-cr/Beanstalk/Tube" data-name="beanstalk::tube">
+      <a href="../Beanstalk/Tube.html">Tube</a>
+      
+        <ul>
+  
+  <li class=" " data-id="beanstalk-cr/Beanstalk/Tube/JobState" data-name="beanstalk::tube::jobstate">
+      <a href="../Beanstalk/Tube/JobState.html">JobState</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> Beanstalk::Tube
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Beanstalk/Tube.html">Beanstalk::Tube</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>This class represents a Beanstalk tube.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+
+
+
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="DEFAULT_QUEUE_NAME">
+        <strong>DEFAULT_QUEUE_NAME</strong> = <code><span class="s">&quot;default&quot;</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Constant for the default tube name.</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="MAX_NAME_LEN">
+        <strong>MAX_NAME_LEN</strong> = <code><span class="n">200</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Constant for the maximum tube name length.</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="VALID_NAME_PATTERN">
+        <strong>VALID_NAME_PATTERN</strong> = <code><span class="s">/^[A-Za-z0-9_\-\+;\$\/\.\(\)]{1,200}$/</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>A constant for the valid name pattern.</p>
+      </dd>
+      
+    
+  </dl>
+
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new(connection:Connection,name:String=DEFAULT_QUEUE_NAME)-class-method" class="signature"><strong>.new</strong>(connection : Connection, name : String = <span class="t">DEFAULT_QUEUE_NAME</span>)</a>
+        
+          <div class="summary"><p>Constructor.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#valid_tube_name?(name:String)-class-method" class="signature"><strong>.valid_tube_name?</strong>(name : String)</a>
+        
+          <div class="summary"><p>A method to check whether a given string is a valid tube name.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#bury(job:Job,priority:UInt32=Job::Settings::DEFAULT_PRIORITY)-instance-method" class="signature"><strong>#bury</strong>(job : Job, priority : UInt32 = <span class="t">Job</span><span class="t">::</span><span class="t">Settings</span><span class="t">::</span><span class="t">DEFAULT_PRIORITY</span>)</a>
+        
+          <div class="summary"><p>Buries the specified job.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bury(job_id,priority:UInt32=Job::Settings::DEFAULT_PRIORITY)-instance-method" class="signature"><strong>#bury</strong>(job_id, priority : UInt32 = <span class="t">Job</span><span class="t">::</span><span class="t">Settings</span><span class="t">::</span><span class="t">DEFAULT_PRIORITY</span>)</a>
+        
+          <div class="summary"><p>Buries the job by its id.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#connection:Beanstalk::Connection-instance-method" class="signature"><strong>#connection</strong> : Beanstalk::Connection</a>
+        
+          <div class="summary"><p>Retrieves the connection associated with the Tube.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#delete(job_id:Int64?)-instance-method" class="signature"><strong>#delete</strong>(job_id : Int64?)</a>
+        
+          <div class="summary"><p>Deletes a job from Beanstalk based on the job id.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#delete(job:Job)-instance-method" class="signature"><strong>#delete</strong>(job : Job)</a>
+        
+          <div class="summary"><p>Deletes a Job from Beanstalk.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#delete?(job:Job)-instance-method" class="signature"><strong>#delete?</strong>(job : Job)</a>
+        
+          <div class="summary"><p>Attempts to delete the Job passed in.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#empty!-instance-method" class="signature"><strong>#empty!</strong></a>
+        
+          <div class="summary"><p>This method will reserve and delete every job that it can from a Tube and will not return until it tries to reserve a job and receives nil back.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ignore(name:String)-instance-method" class="signature"><strong>#ignore</strong>(name : String)</a>
+        
+          <div class="summary"><p>This method instructs a Tube to stop watching a named queue for content.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#kick(maximum:UInt32)-instance-method" class="signature"><strong>#kick</strong>(maximum : UInt32)</a>
+        
+          <div class="summary"><p>This method instructs the server to kick buried jobs to the ready queue.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#kick_job(job:Job)-instance-method" class="signature"><strong>#kick_job</strong>(job : Job)</a>
+        
+          <div class="summary"><p>This method instructs the server to kick a specific job from the buried state (if it is buried) to the ready state.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#kick_job(job_id)-instance-method" class="signature"><strong>#kick_job</strong>(job_id)</a>
+        
+          <div class="summary"><p>This method instructs the server to kick a specific job from the buried state (if it is buried) to the ready state.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#peek(state:JobState)-instance-method" class="signature"><strong>#peek</strong>(state : JobState)</a>
+        
+          <div class="summary"><p>Fetches details for a job, if one is available, without actually reserving it.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#put(job:Job,settings:Job::Settings?=nil)-instance-method" class="signature"><strong>#put</strong>(job : Job, settings : Job::Settings? = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>This method puts a Job into the queue currently being used by the Tube.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#release(job_id:Int%7CString,settings:Job::Settings?=nil)-instance-method" class="signature"><strong>#release</strong>(job_id : Int | String, settings : Job::Settings? = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>This method releases a Job that had previously been reserved, returning it to the ready list and making it available to be reserved again.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#release(job:Job,settings:Job::Settings?=nil)-instance-method" class="signature"><strong>#release</strong>(job : Job, settings : Job::Settings? = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>This method releases a Job that had previously been reserved, returning it to the ready list and making it available to be reserved again.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#reserve(time_out:Time::Span):Job?-instance-method" class="signature"><strong>#reserve</strong>(time_out : Time::Span) : Job?</a>
+        
+          <div class="summary"><p>Attempts to reserve a Job from a Tube.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#reserve(job_id)-instance-method" class="signature"><strong>#reserve</strong>(job_id)</a>
+        
+          <div class="summary"><p>Reserves a job from a Tube based on it's id.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#reserve:Job-instance-method" class="signature"><strong>#reserve</strong> : Job</a>
+        
+          <div class="summary"><p>Attempts to reserve a job from a Tube, blocking until one becomes available.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#reserve?(job_id):Job?-instance-method" class="signature"><strong>#reserve?</strong>(job_id) : Job?</a>
+        
+          <div class="summary"><p>Reserves a job from a Tube based on it's id.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#reserve?-instance-method" class="signature"><strong>#reserve?</strong></a>
+        
+          <div class="summary"><p>This method is equivalent to calling the reserve method with a time out of zero.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#stats(job_id:Int%7CString)-instance-method" class="signature"><strong>#stats</strong>(job_id : Int | String)</a>
+        
+          <div class="summary"><p>This method fetches information relating to a specific job.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#stats(job:Job)-instance-method" class="signature"><strong>#stats</strong>(job : Job)</a>
+        
+          <div class="summary"><p>This method fetches information relating to a specific job.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#stats-instance-method" class="signature"><strong>#stats</strong></a>
+        
+          <div class="summary"><p>This method fetches stats for the queue being used by a tube.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#touch(job_id:Int%7CString)-instance-method" class="signature"><strong>#touch</strong>(job_id : Int | String)</a>
+        
+          <div class="summary"><p>Touches the specified job, extending it's current time to run.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#touch(job:Job)-instance-method" class="signature"><strong>#touch</strong>(job : Job)</a>
+        
+          <div class="summary"><p>Touches the specified job, extending it's current time to run.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#use(name:String)-instance-method" class="signature"><strong>#use</strong>(name : String)</a>
+        
+          <div class="summary"><p>Instructs a Tube to use a given queue name, supplanting the previously used name.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#using:String-instance-method" class="signature"><strong>#using</strong> : String</a>
+        
+          <div class="summary"><p>Retrieves the name of the queue the Tube is using.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#watch(name:String)-instance-method" class="signature"><strong>#watch</strong>(name : String)</a>
+        
+          <div class="summary"><p>Instructs a tube to watch a named queue for content.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#watching:Array(String)-instance-method" class="signature"><strong>#watching</strong> : Array(String)</a>
+        
+          <div class="summary"><p>Retrieves an array of the names of the queues the Tube is watching.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(connection:Connection,name:String=DEFAULT_QUEUE_NAME)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(connection : <a href="../Beanstalk/Connection.html">Connection</a>, name : String = <span class="t">DEFAULT_QUEUE_NAME</span>)
+
+        <a class="method-permalink" href="#new(connection:Connection,name:String=DEFAULT_QUEUE_NAME)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Constructor. Preferrably you should simple obtain your Tube instances
+from a Connection instance rather than direct instantiating them.
+Creates a Tube object set to use and watch the queue name passed in.
+If the queue name differs from the default then the Tube created will
+still be watching the default queue too.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="valid_tube_name?(name:String)-class-method">
+      <div class="signature">
+        
+        def self.<strong>valid_tube_name?</strong>(name : String)
+
+        <a class="method-permalink" href="#valid_tube_name?(name:String)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>A method to check whether a given string is a valid tube name.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="bury(job:Job,priority:UInt32=Job::Settings::DEFAULT_PRIORITY)-instance-method">
+      <div class="signature">
+        
+        def <strong>bury</strong>(job : <a href="../Beanstalk/Job.html">Job</a>, priority : UInt32 = <span class="t">Job</span><span class="t">::</span><span class="t">Settings</span><span class="t">::</span><span class="t">DEFAULT_PRIORITY</span>)
+
+        <a class="method-permalink" href="#bury(job:Job,priority:UInt32=Job::Settings::DEFAULT_PRIORITY)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Buries the specified job. Buried jobs are not part of the ready jobs
+list and therefore cannot be reserved. To unbury a job kick it.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bury(job_id,priority:UInt32=Job::Settings::DEFAULT_PRIORITY)-instance-method">
+      <div class="signature">
+        
+        def <strong>bury</strong>(job_id, priority : UInt32 = <span class="t">Job</span><span class="t">::</span><span class="t">Settings</span><span class="t">::</span><span class="t">DEFAULT_PRIORITY</span>)
+
+        <a class="method-permalink" href="#bury(job_id,priority:UInt32=Job::Settings::DEFAULT_PRIORITY)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Buries the job by its id. Buried jobs are not part of the ready jobs
+list and therefore cannot be reserved. To unbury a job kick it.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="connection:Beanstalk::Connection-instance-method">
+      <div class="signature">
+        
+        def <strong>connection</strong> : <a href="../Beanstalk/Connection.html">Beanstalk::Connection</a>
+
+        <a class="method-permalink" href="#connection:Beanstalk::Connection-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Retrieves the connection associated with the Tube.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="delete(job_id:Int64?)-instance-method">
+      <div class="signature">
+        
+        def <strong>delete</strong>(job_id : Int64?)
+
+        <a class="method-permalink" href="#delete(job_id:Int64?)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Deletes a job from Beanstalk based on the job id. Returns true upon
+successful completion. Raises an exception if the job id is invalid.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="delete(job:Job)-instance-method">
+      <div class="signature">
+        
+        def <strong>delete</strong>(job : <a href="../Beanstalk/Job.html">Job</a>)
+
+        <a class="method-permalink" href="#delete(job:Job)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Deletes a Job from Beanstalk. Note the Job passed in <em>must</em> have an id
+or an exception will be raised. Returns true upon successful completion.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="delete?(job:Job)-instance-method">
+      <div class="signature">
+        
+        def <strong>delete?</strong>(job : <a href="../Beanstalk/Job.html">Job</a>)
+
+        <a class="method-permalink" href="#delete?(job:Job)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Attempts to delete the Job passed in. If the Job has no id then the
+method simply returns false, otherwise it makes a call to delete()
+using the specified job.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="empty!-instance-method">
+      <div class="signature">
+        
+        def <strong>empty!</strong>
+
+        <a class="method-permalink" href="#empty!-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>This method will reserve and delete every job that it can from a Tube and
+will not return until it tries to reserve a job and receives nil back.
+This method returns the number of jobs deleted from the queue.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ignore(name:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>ignore</strong>(name : String)
+
+        <a class="method-permalink" href="#ignore(name:String)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>This method instructs a Tube to stop watching a named queue for content.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="kick(maximum:UInt32)-instance-method">
+      <div class="signature">
+        
+        def <strong>kick</strong>(maximum : UInt32)
+
+        <a class="method-permalink" href="#kick(maximum:UInt32)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>This method instructs the server to kick buried jobs to the ready queue.
+No more than maximum jobs will be kicked by the server. If you specify
+a maximum of zero then the method will automatical assume a maximum of
+one. If successful the method returns the actual number of jobs that
+were kicked.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="kick_job(job:Job)-instance-method">
+      <div class="signature">
+        
+        def <strong>kick_job</strong>(job : <a href="../Beanstalk/Job.html">Job</a>)
+
+        <a class="method-permalink" href="#kick_job(job:Job)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>This method instructs the server to kick a specific job from the buried
+state (if it is buried) to the ready state. The method returns a boolean
+to indicate whether the kick request was successful.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="kick_job(job_id)-instance-method">
+      <div class="signature">
+        
+        def <strong>kick_job</strong>(job_id)
+
+        <a class="method-permalink" href="#kick_job(job_id)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>This method instructs the server to kick a specific job from the buried
+state (if it is buried) to the ready state. The method returns a boolean
+to indicate whether the kick request was successful.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="peek(state:JobState)-instance-method">
+      <div class="signature">
+        
+        def <strong>peek</strong>(state : <a href="../Beanstalk/Tube/JobState.html">JobState</a>)
+
+        <a class="method-permalink" href="#peek(state:JobState)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Fetches details for a job, if one is available, without actually reserving
+it. Note that you must stipulate the state of the job you would like to
+peek at.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="put(job:Job,settings:Job::Settings?=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>put</strong>(job : <a href="../Beanstalk/Job.html">Job</a>, settings : <a href="../Beanstalk/Job/Settings.html">Job::Settings</a>? = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#put(job:Job,settings:Job::Settings?=nil)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>This method puts a Job into the queue currently being used by the
+Tube.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="release(job_id:Int|String,settings:Job::Settings?=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>release</strong>(job_id : Int | String, settings : <a href="../Beanstalk/Job/Settings.html">Job::Settings</a>? = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#release(job_id:Int%7CString,settings:Job::Settings?=nil)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>This method releases a Job that had previously been reserved, returning it
+to the ready list and making it available to be reserved again. Note that,
+if job settings are specified, only the priority and delay are set when
+the job is released.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="release(job:Job,settings:Job::Settings?=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>release</strong>(job : <a href="../Beanstalk/Job.html">Job</a>, settings : <a href="../Beanstalk/Job/Settings.html">Job::Settings</a>? = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#release(job:Job,settings:Job::Settings?=nil)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>This method releases a Job that had previously been reserved, returning it
+to the ready list and making it available to be reserved again. Note that,
+if job settings are specified, only the priority and delay are set when
+the job is released.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="reserve(time_out:Time::Span):Job?-instance-method">
+      <div class="signature">
+        
+        def <strong>reserve</strong>(time_out : Time::Span) : <a href="../Beanstalk/Job.html">Job</a>?
+
+        <a class="method-permalink" href="#reserve(time_out:Time::Span):Job?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Attempts to reserve a Job from a Tube. Takes an optional time_out parameter
+the indicates the mimimum number of seconds to wait for a Job to become
+available before giving up and returning nil.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="reserve(job_id)-instance-method">
+      <div class="signature">
+        
+        def <strong>reserve</strong>(job_id)
+
+        <a class="method-permalink" href="#reserve(job_id)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reserves a job from a Tube based on it's id. This method will raises
+an exception if the Job could not be found.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="reserve:Job-instance-method">
+      <div class="signature">
+        
+        def <strong>reserve</strong> : <a href="../Beanstalk/Job.html">Job</a>
+
+        <a class="method-permalink" href="#reserve:Job-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Attempts to reserve a job from a Tube, blocking until one becomes
+available.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="reserve?(job_id):Job?-instance-method">
+      <div class="signature">
+        
+        def <strong>reserve?</strong>(job_id) : <a href="../Beanstalk/Job.html">Job</a>?
+
+        <a class="method-permalink" href="#reserve?(job_id):Job?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reserves a job from a Tube based on it's id. This method will return
+nil if the Job could not be found.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="reserve?-instance-method">
+      <div class="signature">
+        
+        def <strong>reserve?</strong>
+
+        <a class="method-permalink" href="#reserve?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>This method is equivalent to calling the reserve method with a time out
+of zero. It should return immediately with either a Job or nil.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="stats(job_id:Int|String)-instance-method">
+      <div class="signature">
+        
+        def <strong>stats</strong>(job_id : Int | String)
+
+        <a class="method-permalink" href="#stats(job_id:Int%7CString)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>This method fetches information relating to a specific job.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="stats(job:Job)-instance-method">
+      <div class="signature">
+        
+        def <strong>stats</strong>(job : <a href="../Beanstalk/Job.html">Job</a>)
+
+        <a class="method-permalink" href="#stats(job:Job)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>This method fetches information relating to a specific job.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="stats-instance-method">
+      <div class="signature">
+        
+        def <strong>stats</strong>
+
+        <a class="method-permalink" href="#stats-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>This method fetches stats for the queue being used by a tube.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="touch(job_id:Int|String)-instance-method">
+      <div class="signature">
+        
+        def <strong>touch</strong>(job_id : Int | String)
+
+        <a class="method-permalink" href="#touch(job_id:Int%7CString)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Touches the specified job, extending it's current time to run.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="touch(job:Job)-instance-method">
+      <div class="signature">
+        
+        def <strong>touch</strong>(job : <a href="../Beanstalk/Job.html">Job</a>)
+
+        <a class="method-permalink" href="#touch(job:Job)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Touches the specified job, extending it's current time to run.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="use(name:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>use</strong>(name : String)
+
+        <a class="method-permalink" href="#use(name:String)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Instructs a Tube to use a given queue name, supplanting the previously
+used name. The queue name provided must be valid.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="using:String-instance-method">
+      <div class="signature">
+        
+        def <strong>using</strong> : String
+
+        <a class="method-permalink" href="#using:String-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Retrieves the name of the queue the Tube is using.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="watch(name:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>watch</strong>(name : String)
+
+        <a class="method-permalink" href="#watch(name:String)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Instructs a tube to watch a named queue for content. If the named queue
+does not exist it will be created.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="watching:Array(String)-instance-method">
+      <div class="signature">
+        
+        def <strong>watching</strong> : Array(String)
+
+        <a class="method-permalink" href="#watching:Array(String)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Retrieves an array of the names of the queues the Tube is watching.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>

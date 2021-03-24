@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.35.1">
+<meta name="crystal_docs.project_version" content="HEAD-dev">
+<meta name="crystal_docs.project_name" content="beanstalk-cr">
+
+
+
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../js/doc.js"></script>
+
+  <meta name="repository-name" content="beanstalk-cr">
+  <title>Beanstalk::Tube::JobState - beanstalk-cr HEAD-dev</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../../index.html">
+          beanstalk-cr
+        </a>
+      </h1>
+
+      <span class="project-version">
+        HEAD-dev
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="beanstalk-cr/Beanstalk" data-name="beanstalk">
+      <a href="../../Beanstalk.html">Beanstalk</a>
+      
+        <ul>
+  
+  <li class=" " data-id="beanstalk-cr/Beanstalk/Connection" data-name="beanstalk::connection">
+      <a href="../../Beanstalk/Connection.html">Connection</a>
+      
+    </li>
+  
+  <li class=" " data-id="beanstalk-cr/Beanstalk/Exception" data-name="beanstalk::exception">
+      <a href="../../Beanstalk/Exception.html">Exception</a>
+      
+    </li>
+  
+  <li class="parent " data-id="beanstalk-cr/Beanstalk/Job" data-name="beanstalk::job">
+      <a href="../../Beanstalk/Job.html">Job</a>
+      
+        <ul>
+  
+  <li class=" " data-id="beanstalk-cr/Beanstalk/Job/Settings" data-name="beanstalk::job::settings">
+      <a href="../../Beanstalk/Job/Settings.html">Settings</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="beanstalk-cr/Beanstalk/Server" data-name="beanstalk::server">
+      <a href="../../Beanstalk/Server.html">Server</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="beanstalk-cr/Beanstalk/Tube" data-name="beanstalk::tube">
+      <a href="../../Beanstalk/Tube.html">Tube</a>
+      
+        <ul>
+  
+  <li class=" current" data-id="beanstalk-cr/Beanstalk/Tube/JobState" data-name="beanstalk::tube::jobstate">
+      <a href="../../Beanstalk/Tube/JobState.html">JobState</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">enum</span> Beanstalk::Tube::JobState
+
+</h1>
+
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>An enumeration of the various job states.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+
+
+
+  
+    <h2>
+      <a id="enum-members" class="anchor" href="#enum-members">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Enum Members
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="Buried">
+        <strong>Buried</strong> = <code><span class="n">0</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Delayed">
+        <strong>Delayed</strong> = <code><span class="n">1</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Ready">
+        <strong>Ready</strong> = <code><span class="n">2</span></code>
+      </dt>
+      
+    
+  </dl>
+
+
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#buried?-instance-method" class="signature"><strong>#buried?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#delayed?-instance-method" class="signature"><strong>#delayed?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ready?-instance-method" class="signature"><strong>#ready?</strong></a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="buried?-instance-method">
+      <div class="signature">
+        
+        def <strong>buried?</strong>
+
+        <a class="method-permalink" href="#buried?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="delayed?-instance-method">
+      <div class="signature">
+        
+        def <strong>delayed?</strong>
+
+        <a class="method-permalink" href="#delayed?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ready?-instance-method">
+      <div class="signature">
+        
+        def <strong>ready?</strong>
+
+        <a class="method-permalink" href="#ready?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>
