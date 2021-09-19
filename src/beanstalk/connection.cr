@@ -37,20 +37,20 @@ module Beanstalk
 
     # Constructor. Private method, use one of the open() methods instead.
     private def initialize(server : Server)
-      @server              = server
-      @socket              = Socket.new(Socket::Family::INET, Socket::Type::STREAM)
+      @server = server
+      @socket = Socket.new(Socket::Family::INET, Socket::Type::STREAM)
     end
 
     # This method attempts to establish a connection with the Beanstalk
     # server.
-    protected def connect()
-      Log.debug {"Attempting to connect to Beanstalk on port #{@server.port}."}
+    protected def connect
+      Log.trace { "Attempting to connect to Beanstalk on port #{@server.port}." }
       @socket.connect(@server.host, @server.port, socket_timeout)
     end
 
     # Terminates the connection to the Beanstalk server.
     def close
-      Log.debug {"Closing connection to the #{@server.to_s} Beanstalk server."}
+      Log.trace { "Closing connection to the #{@server.to_s} Beanstalk server." }
       @socket.close if open?
     end
 
@@ -61,7 +61,7 @@ module Beanstalk
 
     # Fetches the default tube for a Connection (i.e. a tube using and watching
     # the default queue).
-    def default_tube()
+    def default_tube
       Tube.new(self)
     end
 
@@ -71,11 +71,11 @@ module Beanstalk
     end
 
     # Attempts to retrieve data from the Beanstalk server.
-    def receive()
-      Log.debug {"Receiving non-job data from the server."}
-      data  = Array(UInt8).new
+    def receive
+      Log.trace { "Receiving non-job data from the server." }
+      data = Array(UInt8).new
       slice = Slice.new(Connection.buffer_size, 0_u8)
-      done  = false
+      done = false
       total = 0
       while !done
         read_size = 0
@@ -87,30 +87,30 @@ module Beanstalk
         done = (read_size < slice.size)
       end
 
-      Log.debug {"Generating result buffer of #{data.size} bytes."}
+      Log.trace { "Generating result buffer of #{data.size} bytes." }
       Slice.new(data.to_unsafe, data.size, read_only: true)
     rescue error
-      Log.error {"Exception caught receiving data from the server.\nCause: #{error}\n#{error.backtrace.join("\n")}"}
+      Log.error { "Exception caught receiving data from the server.\nCause: #{error}\n#{error.backtrace.join("\n")}" }
       raise Beanstalk::Exception.new("Error receiving data from the Beanstalk server. Cause: #{error}")
     end
 
     # Attempts to retrieve the data for a job from the Beanstalk server. This
     # is a specialized method as retrieving job data is really the only variable
     # fetch from the Beanstalk server.
-    def receive_job()
-      Log.debug {"Receiving job data from the server."}
-      data      = Array(UInt8).new
-      slice     = Slice.new(Connection.buffer_size, 0_u8)
+    def receive_job
+      Log.trace { "Receiving job data from the server." }
+      data = Array(UInt8).new
+      slice = Slice.new(Connection.buffer_size, 0_u8)
       read_size = 0
       begin
         read_size = @socket.read(slice)
       rescue error : IO::TimeoutError
-        Log.debug {"Socket read timed out, assuming no more to be read."}
+        Log.trace { "Socket read timed out, assuming no more to be read." }
         read_size = 0
       end
 
       # Check if we max'ed out the read buffer.
-      Log.debug {"Read in #{read_size} bytes from the server."}
+      Log.trace { "Read in #{read_size} bytes from the server." }
       if read_size == slice.size
         # Assume we received a successful reserve and locate the line break offset.
         offset = 0
@@ -120,7 +120,7 @@ module Beanstalk
 
         # Parse the response intro to get the full job size in bytes.
         _, _, job_size = String.new(slice[0, offset]).split(" ")
-        job_size  = job_size.to_i32
+        job_size = job_size.to_i32
         available = slice.size - (offset + 2)
         if available < job_size + 2
           # More to be read, so go get it.
@@ -130,10 +130,10 @@ module Beanstalk
             begin
               read_size = @socket.read(slice)
             rescue error : IO::TimeoutError
-              Log.debug {"Socket read timed out, assuming no more to be read."}
+              Log.trace { "Socket read timed out, assuming no more to be read." }
               read_size = 0
             end
-            Log.debug {"Read in a further #{read_size} bytes from the server."}
+            Log.trace { "Read in a further #{read_size} bytes from the server." }
             data.concat(slice.to_a[0, read_size])
             remaining -= read_size
           end
@@ -146,23 +146,23 @@ module Beanstalk
         data.concat(slice.to_a[0, read_size])
       end
 
-      Log.debug {"Generating result buffer of #{data.size} bytes."}
+      Log.trace { "Generating result buffer of #{data.size} bytes." }
       Slice.new(data.to_unsafe, data.size, read_only: true)
     rescue error
-      Log.error {"Exception caught receiving data from the server.\nCause: #{error}\n#{error.backtrace.join("\n")}"}
+      Log.error { "Exception caught receiving data from the server.\nCause: #{error}\n#{error.backtrace.join("\n")}" }
       raise Beanstalk::Exception.new("Error receiving data from the Beanstalk server. Cause: #{error}")
     end
 
     # A method intended to fetch the response for a stats-job request.
-    def receive_stats()
-      Log.debug {"Receiving job data from the server."}
-      data      = Array(UInt8).new
-      slice     = Slice.new(STATS_BUFFER_SIZE, 0_u8)
+    def receive_stats
+      Log.trace { "Receiving job data from the server." }
+      data = Array(UInt8).new
+      slice = Slice.new(STATS_BUFFER_SIZE, 0_u8)
       read_size = 0
       begin
         read_size = @socket.read(slice)
       rescue error : IO::TimeoutError
-        Log.debug {"Socket read timed out, assuming no more to be read."}
+        Log.trace { "Socket read timed out, assuming no more to be read." }
         read_size = 0
       end
 
@@ -171,13 +171,13 @@ module Beanstalk
       end
 
       response = String.new(slice[0, read_size])
-      Log.debug {"Stats Response:\n#{response}"}
+      Log.trace { "Stats Response:\n#{response}" }
       if !response.starts_with?("OK")
-        Log.error {"Error fetching stats data from the Beanstalk server. Response:\n#{response}"}
+        Log.error { "Error fetching stats data from the Beanstalk server. Response:\n#{response}" }
         raise Beanstalk::Exception.new("Error fetching stats data from the Beanstalk server.")
       end
       lines = response.lines
-      YAML.parse(lines[1,lines.size - 1].join("\n"))
+      YAML.parse(lines[1, lines.size - 1].join("\n"))
     end
 
     # Dispatches a message to the Beanstalk server via the socket connection in
@@ -196,14 +196,14 @@ module Beanstalk
         message.concat(LINE_ENDING)
       end
 
-      Log.debug {"Message to server contains #{message.size} bytes of data. Contents...\n#{message.to_s}"}
+      Log.trace { "Message to server contains #{message.size} bytes of data. Contents...\n#{message.to_s}" }
       @socket.write(Slice.new(message.to_unsafe, message.size, read_only: true))
       @socket.flush
     end
 
     # Fetches stats for the server attached to a connection.
-    def stats()
-      Log.debug {"Requesting server stats for the #{@server.to_s} server."}
+    def stats
+      Log.trace { "Requesting server stats for the #{@server.to_s} server." }
       send(nil, "stats")
       receive_stats()
     end
@@ -229,25 +229,25 @@ module Beanstalk
 
     # This method creates a Connection object connecting to Beanstalk on
     # localhost and using the default port.
-    def self.open()
+    def self.open
       self.open(Server.new(DEFAULT_HOST))
     end
 
     # This method creates a Connection object and attempts to connect it to
     # a Beanstalk server instance.
     def self.open(server : Server) : Connection
-      Log.debug {"Establishing a connection to Beanstalk at #{server.host}:#{server.port}."}
+      Log.debug { "Establishing a connection to Beanstalk at #{server.host}:#{server.port}." }
       instance = self.new(server)
-      instance.connect()
+      instance.connect
       instance
     rescue error
-      Log.error {"Error connecting to Beanstalk server. Cause: #{error}\n#{error.backtrace.join("\n")}"}
+      Log.error { "Error connecting to Beanstalk server. Cause: #{error}\n#{error.backtrace.join("\n")}" }
       raise Beanstalk::Exception.new("Error connecting to Beanstalk server. Cause: #{error}")
     end
 
     # This method creates a Connection object and attempts to connect it to
     # a Beanstalk server instance.
-    def self.open(host : String, port=Server::DEFAULT_PORT)
+    def self.open(host : String, port = Server::DEFAULT_PORT)
       self.open(Server.new(host, port))
     end
   end
